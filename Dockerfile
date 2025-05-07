@@ -5,9 +5,9 @@ WORKDIR /app
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-COPY ./app ./app
-COPY ./start.sh ./start.sh
-RUN chmod +x ./start.sh
+COPY . .
 
-EXPOSE 8000
-CMD ["./start.sh"]
+# Используем переменную PORT от Render
+ENV PORT=8000
+
+CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
